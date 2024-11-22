@@ -9,7 +9,7 @@ const ProfilePicture = ({ id, height }: ProfilePictureProps) => {
 		<img
 			src={`${BASE_URL}/users/${id}/profile`}
 			alt='Profile Picture'
-			className={`rounded-full object-cover ${height == 'large' ? 'h-20 w-20 md:h-40 md:w-40' : 'h-14 w-14 md:h-28 md:w-28'}`}
+			className={`rounded-full object-cover ${height == 'large' ? 'W-28 h-28 md:h-48 md:w-48' : 'h-14 w-14 md:h-28 md:w-28'}`}
 		/>
 	);
 };
