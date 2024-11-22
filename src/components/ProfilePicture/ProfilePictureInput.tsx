@@ -24,7 +24,6 @@ const ProfilePictureInput = ({
 		if (id != -1) checkProfilePicture();
 	}, [id, doesProfilePictureExist]);
 
-	if (id === -1) return null;
 	return (
 		<div className='flex w-full flex-row items-center justify-center gap-x-5 md:gap-x-10'>
 			{profilePictureExists ? (

@@ -30,6 +30,7 @@ const create = async (email: string, age: number) => {
 	if (res.status > 204) {
 		throw new Error(res.data);
 	}
+	return res.data.id;
 };
 
 const modify = async (id: number, email: string, age: number) => {

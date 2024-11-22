@@ -29,22 +29,23 @@ const UserForm = ({ setIsFormEnabled, data }: UserFormProps) => {
 	};
 
 	const handleSubmit = async () => {
-		const success =
-			id === -1
-				? await createUser(email, +age)
-				: await modifyUser(id, email, +age);
+		const newId = await (id === -1 ? createUser(email, +age) : false);
+		const success = await (id !== -1 ? modifyUser(id, email, +age) : false);
 
-		if (!success) return;
+		if (!newId && !success) return;
+		if (typeof newId !== 'number') return;
 
 		if (!profileFile) {
 			setIsFormEnabled(false);
 			return;
 		}
 
-		if (id != -1) {
-			const profileSuccess = await uploadProfile(id, profileFile);
-			if (profileSuccess) setIsFormEnabled(false);
-		}
+		const profileSuccess = await uploadProfile(
+			id === -1 ? newId : id,
+			profileFile,
+		);
+
+		if (profileSuccess) setIsFormEnabled(false);
 	};
 
 	return (

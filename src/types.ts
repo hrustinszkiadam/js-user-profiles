@@ -12,7 +12,7 @@ type UsersContextType = {
 	modifiedUser: User | null;
 	setModifiedUser: (user: User | null) => void;
 	getUsers: () => Promise<boolean>;
-	createUser: (email: string, age: number) => Promise<boolean>;
+	createUser: (email: string, age: number) => Promise<false | number>;
 	modifyUser: (id: number, email: string, age: number) => Promise<boolean>;
 	removeUser: (id: number) => Promise<boolean>;
 	uploadProfile(id: number, file: File): Promise<boolean>;

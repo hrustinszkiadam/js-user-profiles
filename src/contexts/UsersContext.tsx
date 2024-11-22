@@ -51,11 +51,14 @@ const UsersProvider = ({ children }: PropsWithChildren) => {
 		}
 	};
 
-	const createUser = async (email: string, age: number): Promise<boolean> => {
+	const createUser = async (
+		email: string,
+		age: number,
+	): Promise<false | number> => {
 		try {
-			await create(email, age);
+			const id = await create(email, age);
 			getUsers();
-			return true;
+			return id;
 		} catch (err) {
 			handleError(err as AxiosError);
 			return false;
