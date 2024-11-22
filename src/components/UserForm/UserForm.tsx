@@ -29,11 +29,17 @@ const UserForm = ({ setIsFormEnabled, data }: UserFormProps) => {
 	};
 
 	const handleSubmit = async () => {
-		const newId = await (id === -1 ? createUser(email, +age) : false);
-		const success = await (id !== -1 ? modifyUser(id, email, +age) : false);
+		let newId: number | false = false;
+		let success = false;
+
+		if (id === -1) {
+			newId = await createUser(email, +age);
+		} else {
+			success = await modifyUser(id, email, +age);
+		}
 
 		if (!newId && !success) return;
-		if (typeof newId !== 'number') return;
+		if (typeof newId !== 'number' && !success) return;
 
 		if (!profileFile) {
 			setIsFormEnabled(false);
@@ -41,7 +47,7 @@ const UserForm = ({ setIsFormEnabled, data }: UserFormProps) => {
 		}
 
 		const profileSuccess = await uploadProfile(
-			id === -1 ? newId : id,
+			id === -1 && typeof newId === 'number' ? newId : id,
 			profileFile,
 		);
 
