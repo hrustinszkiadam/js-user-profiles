@@ -59,6 +59,18 @@ const removeProfilePicture = async (id: number) => {
 	}
 };
 
+const checkProfilePicture = async (id: number) => {
+	const res = await apiService.get(`/users/${id}/profile`);
+	if (res.status > 204) {
+		throw new Error(res.data);
+	}
+
+	if (res.headers['content-type'] === 'image/svg+xml') {
+		return false;
+	}
+	return true;
+};
+
 export {
 	BASE_URL,
 	get,
@@ -67,4 +79,5 @@ export {
 	modify,
 	uploadProfilePicture,
 	removeProfilePicture,
+	checkProfilePicture,
 };

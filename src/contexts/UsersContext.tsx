@@ -7,6 +7,7 @@ import {
 	modify,
 	uploadProfilePicture,
 	removeProfilePicture,
+	checkProfilePicture,
 } from '../api';
 import { User, UsersContextType } from '../types';
 import { AxiosError } from 'axios';
@@ -23,6 +24,7 @@ const UsersContext = createContext<UsersContextType>({
 	removeUser: async () => false,
 	uploadProfile: async () => false,
 	removeProfile: async () => false,
+	doesProfilePictureExist: async () => false,
 });
 export const useUsers = () => useContext(UsersContext);
 
@@ -33,7 +35,9 @@ const UsersProvider = ({ children }: PropsWithChildren) => {
 
 	const handleError = (err: AxiosError) => {
 		const message = (err.response?.data as { message: string[] }).message;
-		setError(message);
+
+		if (!Array.isArray(message)) setError([message]);
+		else setError(message);
 	};
 
 	const getUsers = async (): Promise<boolean> => {
@@ -107,6 +111,16 @@ const UsersProvider = ({ children }: PropsWithChildren) => {
 		}
 	};
 
+	const doesProfilePictureExist = async (id: number): Promise<boolean> => {
+		try {
+			const res = await checkProfilePicture(id);
+			return res;
+		} catch (err) {
+			handleError(err as AxiosError);
+			return false;
+		}
+	};
+
 	return (
 		<UsersContext.Provider
 			value={{
@@ -121,6 +135,7 @@ const UsersProvider = ({ children }: PropsWithChildren) => {
 				removeUser,
 				uploadProfile,
 				removeProfile,
+				doesProfilePictureExist,
 			}}
 		>
 			{children}

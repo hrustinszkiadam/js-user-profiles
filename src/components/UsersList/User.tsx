@@ -1,4 +1,4 @@
-import ProfilePicture from './ProfilePicture';
+import ProfilePicture from '../ProfilePicture/ProfilePicture';
 import { User as U } from '../../types';
 import UserActions from './UserActions';
 

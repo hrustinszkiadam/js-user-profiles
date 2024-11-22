@@ -17,6 +17,7 @@ type UsersContextType = {
 	removeUser: (id: number) => Promise<boolean>;
 	uploadProfile(id: number, file: File): Promise<boolean>;
 	removeProfile(id: number): Promise<boolean>;
+	doesProfilePictureExist(id: number): Promise<boolean>;
 };
 
 export type { User, UsersContextType };
